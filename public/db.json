@@ -1,0 +1,58 @@
+{ 
+	"Reviews": [
+		{
+			"id": 0,
+			"value": "It was good!",
+			"userId": 1,
+			"date": "9/12/2017",
+			"comments": [
+				{
+					"id": 0,
+					"value": "Good",
+					"date": "10/12/2017",
+					"userId": 0
+				},
+				{
+					"id": 1,
+					"value": "my comment #2",
+					"date": "10/13/2017",
+					"userId": 0
+				}
+			]
+		},
+		{
+			"id": 1,
+			"value": "It was great!",
+			"userId": 1,
+			"comments": [
+				{
+					"id": 0,
+					"value": "Sweet"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"userId": 1,
+			"value": "It was awesome!",
+			"comments": []
+		}
+	],
+	"CurrentReview": -1,
+	"Users": [
+		{
+			"id": 0,
+			"name": "Liam",
+			"location": "Brooklyn",
+			"email": "lbellows@gmail.com",
+			"type": "Trainer"
+		},
+		{
+			"id": 1,
+			"name": "Leslie",
+			"email": "lkworthington@gmail.com"
+		}
+	]
+
+	
+}
