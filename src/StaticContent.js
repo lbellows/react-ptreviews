@@ -64,7 +64,7 @@ export class Contact extends Component {
 	Send(){
 		AWS.config.region = 'us-east-1'; // Region
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: config.poolId,
+        IdentityPoolId: Config.poolId,
     });
 
 		var service = new AWS.SNS();
@@ -72,7 +72,7 @@ export class Contact extends Component {
     var params = {
         Message: document.getElementById('msg').value,
         Subject: this.domain + ': Message',
-        TopicArn: config.topicArn,
+        TopicArn: Config.topicArn,
 
     }
 

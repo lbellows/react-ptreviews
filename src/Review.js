@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import {Comments} from './Comment';
 import {Link} from 'react-router-dom';
 import $ from 'jquery';
+import {DAL} from './DAL'
+import moment from 'moment';
 
-export const Reviews = ({data, addHandler}) => {
+export const Reviews = (data) => {
   const items = data.Reviews.map((rev, ind) => {
     return(  
       <Link to={"/reviews/" + rev.id} className="list-group-item" key={rev.id}> 
-        <h4 className="list-group-item-heading">{rev.value}</h4>
+        <h4 className="list-group-item-heading">{rev.title || "(Untitled)"}</h4>
       </Link>
     );
   })
@@ -15,7 +17,7 @@ export const Reviews = ({data, addHandler}) => {
   return(
     
     <div>
-      <AddReview addHandler={addHandler} />
+      <AddReview {...data} />
       <div className="list-group">
         <h2>Reviews:</h2>
         {  items }
@@ -24,10 +26,32 @@ export const Reviews = ({data, addHandler}) => {
   );
 }
 
+//TODO: Combine with reviews so you can set state and view new reviews
 export class AddReview extends Component {
   constructor(props){
     super(props);
-    this.state = { formOpened: false }
+    this.state = { Reviews: [], formOpened: false }
+    this.db = new DAL();
+  }
+
+  AddReviewHandler(){
+    var newReview = $('form').serializeArray()
+      .reduce((a, x) => { 
+        if(x.value) 
+          a[x.name] = x.value; 
+        return a; 
+      }, {});
+    
+    this.db.GetAll(this.db.DB_TABLES.reviews).then(res => {
+      var count = res.ScannedCount;
+      var nextId = (count + 1).toString();
+      newReview.id = nextId;
+      newReview.userId = '1';
+      newReview.date = moment().format();
+      //this.setState({Reviews: [...this.state.Reviews, newReview]});
+      console.log(newReview);
+      this.db.Save(newReview, this.db.DB_TABLES.reviews);//.then(res => location.reload(true));
+    })
   }
 
   render(){
@@ -73,12 +97,12 @@ export class AddReview extends Component {
                 </select>
               </div>
             </div>
-            <div className="row">
+            <div className="row form-inline">
               <div className="col-sm-6 col-sm-offset-3">
-                <button type="button" onClick={() => 
-                  this.props.addHandler($('form').serializeArray()
-                    .reduce((a, x) => { a[x.name] = x.value; return a; }, {}))} 
+                <button type="button" onClick={() => this.AddReviewHandler()}
                   className="btn btn-default form-control">Create</button>
+                <button type="button" onClick={() => {this.setState({formOpened: !this.state.formOpened})}}
+                  className="btn btn-default form-control">Cancel</button>
               </div>
             </div>
           </form>
@@ -88,35 +112,44 @@ export class AddReview extends Component {
   }
 }
 
+//{TheReview, Reviews, hideComments, match}
+export const Review = (data) => {
+  console.log(data);
+   var rev = data.TheReview;
 
-export const Review = ({data, match}) => {
-    var reviewToShow = data && data.CurrentReview > -1 ? 
-      data.CurrentReview : 
-      Number(match.params.id);
-
-    var item = data.Reviews.find((rev) => {
-      return (rev.id === reviewToShow);
-    });
+   if(!rev && data.match){
+      var revId = data.match.params.id;
+      rev = data.Reviews.find(r => r.id === revId) || {};
+    }
 
     return(
       <div className="panel">
         <Link to='/reviews'>
-          <h4 className="panel-heading">{item.value}</h4>
+          <h2 className="panel-heading">{rev.title || "(Untitled)"}</h2>
         </Link>
-        <p className="panel-body">Some description</p>
-        <Comments data={item.comments || []} />
+        <p className="panel-body">{rev.value}</p>
+        {
+        !data.hideComments && rev.id &&
+          <Comments reviewId={rev.id} />
+        }
       </div>
     );
 }
 
-export const FeaturedReview = ({data}) => {
-    const reviewInd = Math.floor((Math.random() * data.Reviews.length) ); 
+export const FeaturedReview = ({Reviews}) => {
+  if(Reviews == null || Reviews.length < 1){
+    return <div></div>;
+  }
 
-    return(
-      <div className="panel panel-default">
-        <h2>Featured Review</h2>
-          <Review data={{Reviews: data.Reviews, CurrentReview: reviewInd}} />
-      </div>
-    );
+  const reviewInd = Math.floor(Math.random() * (Reviews.length) ); 
+
+  var theReview = Reviews[reviewInd];
+
+  return(
+    <div className="panel panel-default">
+      <h2>Featured Review</h2>
+        <Review {...{TheReview: theReview, hideComments:true}} />
+    </div>
+  );
     
 }

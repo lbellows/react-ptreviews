@@ -5,60 +5,47 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {About, Contact, Jumbotron, Nav, Login } from './StaticContent';
 import {Register} from './Register';
 import {Blog} from './Blog';
-import moment from 'moment';
-
+import { DAL } from './DAL';
 
 export default class App extends Component {
 
   constructor(props){
     super(props);
-    this.state = props; // {Reviews:[], CurrentReview: -1};
-    this.AddReviewHandler = this.AddReviewHandler.bind(this);
+    this.state = null;
+    console.log("app.js init");
   }
 
-/*
+
+  loadData(){
+    var db = new DAL();
+      return db.GetAll(db.DB_TABLES.reviews).then((data) => {
+        return {
+          Reviews: data.Items
+        };
+      })
+    .catch(err => console.log(err));
+  }
+
   componentDidMount(){
-    fetch('/db.json', {method:'GET'})
-    .then((res) => {
-      return res.json();
-    })
-    .then((data) => {
-      
-      this.setState({Reviews: data.Reviews});
+    this.loadData().then(data => {
+      this.setState(data);
     });
-  }
-*/
-  GetView(){
-    //show empty set
-    if(this.state.Reviews.length <= 0){
-      return(<p>Sorry there are no reviews right now!</p>);
-    }
-
-    //show list of reviews
-    return(<Reviews data={this.state} addHandler={this.AddReviewHandler} />);
-  }
-
-  AddReviewHandler(newReview){
-    var nextId = this.state.Reviews.length + 1;
-    newReview.id = nextId;
-    newReview.userId = 1;
-    newReview.comments = [];
-    newReview.date = moment();
-
-    this.setState({Reviews: [...this.state.Reviews, newReview]})
   }
 
   render() {
-    
+    console.log("app", this.state);
+    if(this.state == null)
+      return <div>Loading...</div>;
+
     return (
       <Router>
       <div className="App container">
         <Nav />
         <Route exact path='/' component={Jumbotron} />
-        <Route exact path='/' render={() =>  <FeaturedReview data={this.state} />} />
+        <Route exact path='/' render={() =>  <FeaturedReview {...this.state} />} />
         <Route exact path='/' component={About} />
-        <Route exact path='/reviews' render={() => this.GetView()} />
-        <Route path='/reviews/:id' component={(props) => <Review data={this.state} {...props} />} />
+        <Route exact path='/reviews' render={() => <Reviews {...this.state} /> } />
+        <Route path='/reviews/:id' component={(data) => <Review {...this.state} {...data} />} />
         <Route path='/about' component={About} />
         <Route path='/contact' component={Contact} />
         <Route path='/register' component={Register} />

@@ -4,22 +4,13 @@ import App from './App';
 import './slate.css'
 import './styles.css'
 
-function loadData(){
-  return fetch('/db.json', {method:'GET'})
-    .then((res) => {
-      return res.json();
-    })
-    .then((data) => {
-      
-     return {Users: data.users, Reviews: data.Reviews, CurrentReview: -1};
-    });
-}
+console.log("index.js init");
 
-loadData().then(data => {
-  ReactDOM.render(
-    <App {...data} />,
-    document.getElementById('root')
-  );
-});
+ReactDOM.render(
+  
+  <App />,
+  document.getElementById('root')
+);
+
 
 
