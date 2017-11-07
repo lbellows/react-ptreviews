@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Comments} from './Comment';
 import {Link} from 'react-router-dom';
 import $ from 'jquery';
-import {DAL} from './DAL'
+import DAL from './DAL';
 import moment from 'moment';
 
 export const Reviews = (data) => {
@@ -114,7 +114,7 @@ export class AddReview extends Component {
 
 //{TheReview, Reviews, hideComments, match}
 export const Review = (data) => {
-  console.log(data);
+  console.log('rev', data);
    var rev = data.TheReview;
 
    if(!rev && data.match){

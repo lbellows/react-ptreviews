@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
-import * as AWS from 'aws-sdk';
-import Config from './config.json'
 
 export const LandingPage = () => {
 		return(
@@ -53,66 +51,6 @@ export const About = () => {
 		);
 }
 
-export class Contact extends Component {
-
-	constructor(props){
-		super(props);
-		this.domain = location.hostname;
-		this.state = {new: true, message: ""};
-	}
-
-	Send(){
-		AWS.config.region = 'us-east-1'; // Region
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: Config.poolId,
-    });
-
-		var service = new AWS.SNS();
-
-    var params = {
-        Message: document.getElementById('msg').value,
-        Subject: this.domain + ': Message',
-        TopicArn: Config.topicArn,
-
-    }
-
-    service.publish(params, (err, data) => {
-				if (err){
-					this.setState({new: false, message: "Sorry there was an error!"});
-        }
-        else{
-					this.setState({new: false, message: "Thank you for your email!"});
-        }
-    });
-	}
-
-	render(){
-		var display = <div></div>;
-		if(!this.state.new){
-			display = (
-				<h3 className="col-sm-6 col-sm-offset-4">{ this.state.message}</h3>
-			) 
-		}
-		else if(this.state.new){
-			display = (
-			<form id="form">
-            <div className="form-group col-sm-8 col-sm-offset-2">
-                <h2>Contact me about domain:</h2>
-                <textarea name="msg" id="msg" placeholder="Type your message and contact info." className="form-control"></textarea>
-                <button type="button" onClick={() => this.Send()} className="btn btn-primary form-control">Send</button>
-            </div>
-			</form>
-			)
-		}
-
-		return(
-			<div className="row">
-				{display}
-			</div>
-		);
-	}
-}
-
 export const Jumbotron = () => {
 		return(
 			<div className="jumbotron">
@@ -141,7 +79,6 @@ export const Nav = () => {
             <li role="presentation"><Link to="/about">About</Link></li>
             <li role="presentation"><Link to="/contact">Contact</Link></li>
 						<li role="presentation"><Link to="/blog">Blog</Link></li>
-						<li role="presentation"><a target="_blank" href="http://astore.amazon.com/8khs4-20">Store</a></li>
           </ul>
         </nav>
         <h3 className="text-muted">ptreviews.com</h3>
@@ -149,16 +86,13 @@ export const Nav = () => {
 		);
 }
 
-export const Login = () => {
-		return(
-			<div>
-				<Link to="register">Register?</Link>
-				<div className="sign-in form-inline">
-					
-					<input placeholder="email" className="form-control" />
-					<input placeholder="password" className="form-control" />
-					<button className="btn btn-primary">Signin</button>
-				</div>
-			</div>
-		);
+export const Footer = () => {
+	var curDate = new Date();
+	
+	return(
+		<footer className="footer">
+			<p>&copy; <span id="curYear">{curDate.getUTCFullYear()}</span> LCB Designs</p>
+		</footer>
+	);
 }
+

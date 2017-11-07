@@ -1,7 +1,7 @@
 import * as AWS from 'aws-sdk';
 import awsconfig from './awsconfig.json';
 
-export class DAL{
+export default class DAL{
 
   constructor(){
     //TODO: move this into AWS lambda

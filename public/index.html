@@ -35,27 +35,17 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
         </div>
-      <footer class="footer">
-        <p>&copy; <span id="curYear"></span> LCB Designs</p>
-      </footer>
+        <br />
+        <div id="footer"></div>
+
     </div> <!-- /container -->
-   
-    <script
-			  src="https://code.jquery.com/jquery-3.2.1.min.js"
-			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-			  crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.145.0.min.js"></script>
+
     <script>
       if(!document.location.protocol.startsWith('https') 
         && !document.location.hostname.startsWith('localhost'))
       {
         document.location.protocol = 'https';
       }
-    $(() => {
-      var curDate = new Date();
-      $('#curYear').text(curDate.getUTCFullYear());
-    });
     </script>
     
   </body>

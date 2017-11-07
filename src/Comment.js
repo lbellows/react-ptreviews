@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { DAL } from './DAL';
+import DAL from './DAL';
 import moment from 'moment';
 
 export class Comment extends Component{

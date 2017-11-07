@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 //import logo from './lift_icon.gif';
 import { Reviews, FeaturedReview, Review} from './Review';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import {About, Contact, Jumbotron, Nav, Login } from './StaticContent';
+import {About, Jumbotron, Nav } from './StaticContent';
 import {Register} from './Register';
-import {Blog} from './Blog';
-import { DAL } from './DAL';
+import Blog from './Blog';
+import Login from './Login';
+import Contact from './Contact';
+import DAL from './DAL';
 
 export default class App extends Component {
 
@@ -23,7 +25,7 @@ export default class App extends Component {
           Reviews: data.Items
         };
       })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err.message));
   }
 
   componentDidMount(){
@@ -33,7 +35,6 @@ export default class App extends Component {
   }
 
   render() {
-    console.log("app", this.state);
     if(this.state == null)
       return <div>Loading...</div>;
 

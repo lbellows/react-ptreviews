@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-
+import Users from './Users';
 
 export class Register extends Component {
 
-	constructor() {
-    super();
-    this.changeEmail = ev => this.props.onChangeEmail(ev.target.value);
-    this.changePassword = ev => this.props.onChangePassword(ev.target.value);
-    this.changeUsername = ev => this.props.onChangeUsername(ev.target.value);
-    this.submitForm = (username, email, password) => ev => {
-      ev.preventDefault();
-      this.props.onSubmit(username, email, password);
-    }
-	}
+	constructor(props) {
+    super(props);
+    this.email="";
+    this.password="";
+    
+  }
 
+  changeEmail = ev => this.email = ev.target.value;
+  changePassword = ev => this.password = ev.target.value;
+  
+  submitForm(){
+    var users = new Users();
+    users.CreateUser(this.email, this.password).then(res => {
+      console.log("user res", res);
+    })
+    .catch(err => console.log("user err", err));
+  }
+
+  //TODO: Goto success screen after register
+  //TODO: Create generic success with a LinkTo param, with referred page, etc...
 	render(){
-		
-		const email = this.props.email;
-    const password = this.props.password;
-		const username = this.props.username;
-
 		return(
 			<div className="auth-page">
         <div className="container page">
@@ -34,26 +38,14 @@ export class Register extends Component {
                 </Link>
               </p>
 
-              { console.log(this.props.errors)}
-
-              <form onSubmit={this.submitForm(username, email, password)}>
+              <form>
                 <fieldset>
-
-                  <fieldset className="form-group">
-                    <input
-                      className="form-control form-control-lg"
-                      type="text"
-                      placeholder="Username"
-                      value={this.props.username}
-                      onChange={this.changeUsername} />
-                  </fieldset>
 
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"
                       type="email"
                       placeholder="Email"
-                      value={this.props.email}
                       onChange={this.changeEmail} />
                   </fieldset>
 
@@ -62,15 +54,14 @@ export class Register extends Component {
                       className="form-control form-control-lg"
                       type="password"
                       placeholder="Password"
-                      value={this.props.password}
                       onChange={this.changePassword} />
                   </fieldset>
 
                   <button
                     className="btn btn-lg btn-primary pull-xs-right"
-                    type="submit"
-                    disabled={this.props.inProgress}>
-                    Sign in
+                    type="button"
+                    onClick={() => this.submitForm()}>
+                    Register
                   </button>
 
                 </fieldset>
