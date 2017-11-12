@@ -1,11 +1,17 @@
 import * as AWS from 'aws-sdk';
 import awsconfig from './awsconfig.json';
+import { CognitoUserPool, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 
 export default class Users {
 
+  poolData = {
+    UserPoolId : awsconfig.poolId,
+    ClientId : awsconfig.appClientId 
+  };
+
   constructor(){
     this.cog = new AWS.CognitoIdentityServiceProvider();
-    this.user = new AWS.CognitoIdentityServiceProvider().user
+    this.user = new AWS.CognitoIdentity();
   }
 
   CreateUser(email, password){
@@ -21,22 +27,68 @@ export default class Users {
       ]
     };
 
-    /*
-    var poolData = { 
-      UserPoolId : awsconfig.poolId,
-      ClientId : awsconfig.appClientId
-    };
-    var cog = new AWS.CognitoIdentityServiceProvider(poolData);
-    */
     return this.cog.signUp(params).promise();
   }
 
-  ConfirmUser(){
-    this.cog.getUser().promise().then(res => res);
-    this.cog.confirmSignUp();
+  ConfirmUser(user, code){
+
+    return new Promise((res, rej) => {
+      var userPool = new CognitoUserPool(this.poolData);
+      var userData = {
+          Username : user,
+          Pool : userPool
+      };
+
+      var cognitoUser = new CognitoUser(userData);
+      cognitoUser.confirmRegistration(code, true, rej, res);
+    });
   }
 
-  SignIn(){
-    this.cog.initiateAuth()
+  SignIn(user, pass, code){
+    var authenticationData = {
+      Username : user,
+      Password : pass,
+    };
+
+    return new Promise((res, rej) => {
+      var authenticationDetails = new AuthenticationDetails(authenticationData);
+
+      var userPool = new CognitoUserPool(this.poolData);
+      var userData = {
+          Username : user,
+          Pool : userPool
+      };
+
+      var cognitoUser = new CognitoUser(userData);
+    
+      cognitoUser.authenticateUser(authenticationDetails,{
+        onSuccess: res,
+        onFailure: rej
+      });
+    });
+     
+    //{
+    //    onSuccess: function (result) {
+            //console.log('access token + ' + result.getAccessToken().getJwtToken());
+
+            //POTENTIAL: Region needs to be set if not already set previously elsewhere.
+            //AWS.config.region = '<region>';
+
+            //need to add write to dynamo DB permissions in IAM
+            //AWS.config.credentials = new AWS.CognitoIdentityCredentials();
+            //return result;
+              /*{
+                IdentityPoolId : '...', // your identity pool id here
+                Logins : {
+                    // Change the key below according to the specific region your user pool is in.
+                    'cognito-idp.<region>.amazonaws.com/<YOUR_USER_POOL_ID>' : result.getIdToken().getJwtToken()
+                }
+            });*/
+
+            // Instantiate aws sdk service objects now that the credentials have been updated.
+            // example: var s3 = new AWS.S3();
+
+        //}
+    //}).promise();
   }
 }

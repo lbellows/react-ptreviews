@@ -6,7 +6,7 @@ export default class Contact extends Component {
   
     constructor(props){
       super(props);
-      this.domain = location.hostname;
+      this.domain = window.location.hostname;
       this.state = {new: true, message: ""};
     }
   

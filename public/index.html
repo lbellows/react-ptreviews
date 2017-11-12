@@ -41,10 +41,10 @@
     </div> <!-- /container -->
 
     <script>
-      if(!document.location.protocol.startsWith('https') 
-        && !document.location.hostname.startsWith('localhost'))
+      if(!window.location.protocol.startsWith('https') 
+        && !window.location.hostname.startsWith('localhost'))
       {
-        document.location.protocol = 'https';
+        window.location.protocol = 'https';
       }
     </script>
     

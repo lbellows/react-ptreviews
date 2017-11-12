@@ -5,14 +5,15 @@
   "devDependencies": {},
   "dependencies": {
     "@types/jquery": "^3.2.16",
-    "aws-sdk": "^2.145.0",
+    "amazon-cognito-identity-js": "^1.23.0",
+    "aws-sdk": "^2.149.0",
     "jquery": "^3.2.1",
-    "moment": "^2.19.1",
-    "react": "^16.0.0",
-    "react-bootstrap": "^0.30.8",
-    "react-dom": "^16.0.0",
+    "moment": "^2.19.2",
+    "react": "^16.1.0",
+    "react-bootstrap": "^0.31.5",
+    "react-dom": "^16.1.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "0.9.5"
+    "react-scripts": "^1.0.17"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button} from 'react-bootstrap';
 
 
 export default class Blog extends Component{
@@ -6,7 +7,9 @@ export default class Blog extends Component{
 	render() {
     return(
     <div>
-			Coming soon...
-    </div>);
+			<p>Coming soon...</p>
+      <Button name="test" onClick={() => alert('hi')}>test</Button>
+    </div>
+    );
   }
 }

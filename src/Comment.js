@@ -92,20 +92,24 @@ export class Comments extends Component {
     .then(res => this.setState({myComments: res.Items}));
   }
   
-  render(){
-    const comments = this.state.myComments.map((item) => {
+  TheComments(){
+    return this.state.myComments.map((item) => {
       return(<h4 key={item.id} className="panel-body">{item.value}</h4>);
     });
+  }
+
+  render(){
+    
     
     console.log(this.props);
-    console.log(comments);
+    //console.log(comments);
 
     return(
       <div>
         <hr />
         <div className="panel-heading">
           <h3>Read comments:</h3>
-          <div>{ comments }</div>
+          {this.TheComments() }
           <AddComment reviewId={this.props.reviewId} />
         </div>
       </div>
