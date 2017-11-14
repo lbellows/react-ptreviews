@@ -44,7 +44,7 @@ export default class Users {
     });
   }
 
-  SignIn(user, pass, code){
+  SignIn(user, pass){
     var authenticationData = {
       Username : user,
       Password : pass,

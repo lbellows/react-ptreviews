@@ -40,12 +40,12 @@ export const About = () => {
 				<p>Ultimately, we offer our users three services. Namely:</p>
 				<ul>
 						<li><b>Gym Services</b>, where gym owners can offer discounts to members and let people who travel 
-							have the ability to access other PTAlliance gyms at a discount.</li>
-						<li>We want to give <b>Personal Trainers</b> a place where they can refer their clients to positive discussion about their abilities and training methods; and a place where they can respond to criticisms.</li>
-						<li>We also want to provide a place where <b>Athletes and Trainees</b> can discuss experiences they've had with specific trainers or gyms, and give ratings in relation to other places they have trained at.</li>
+							have the ability to access other PT Alliance gyms at a discount.</li>
+						<li>We want to give <b>Personal Trainers</b> a place where they can refer their clients to positive discussion about their abilities and training methods and a place where they can respond to criticisms.</li>
+						<li>We also want to provide a place where <b>Athletes and Trainees</b> can discuss experiences they've had with specific trainers or gyms and give ratings in relation to other places they have trained at.</li>
 				</ul>
 				<h2>Join</h2>
-				<p>So join today for free, and be part of the fitness review community.</p>  
+				<p>So join today for free and be part of the fitness review community.</p>  
 				<Link className="btn btn-primary" to="/register">Sign up</Link>
 			</div>
 		);
@@ -68,22 +68,34 @@ export const Jumbotron = () => {
 		);
 }
 
-export const Nav = () => {
+export const Nav = (data) => {
+	console.log('nav',data)
 		return(
 			<div className="header clearfix">
         <nav>
           <ul className="nav nav-pills pull-right">
             <li role="presentation"><Link to="/">Home</Link></li>
             <li role="presentation"><Link to="/reviews">Reviews</Link></li>
-            <li role="presentation"><Link to="/login">Log in</Link></li>
-            <li role="presentation"><Link to="/about">About</Link></li>
+						<li role="presentation"><Link to="/about">About</Link></li>
             <li role="presentation"><Link to="/contact">Contact</Link></li>
 						<li role="presentation"><Link to="/blog">Blog</Link></li>
+						<Profile {...data} />
           </ul>
         </nav>
         <h3 className="text-muted">ptreviews.com</h3>
       </div>
 		);
+}
+
+export const Profile = (props) => {
+	console.log('profile', props)
+
+
+			if(!props.LoggedIn)
+				return <li role="presentation"><Link to="/login">Log in</Link></li>
+
+			return <li role="presentation">{props.UserInfo.accessToken.payload.username}</li>
+
 }
 
 export const Footer = () => {
