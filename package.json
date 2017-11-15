@@ -7,11 +7,11 @@
     "@types/jquery": "^3.2.16",
     "amazon-cognito-identity-js": "^1.23.0",
     "aws-sdk": "^2.149.0",
+    "babel-runtime": "^6.26.0",
     "jquery": "^3.2.1",
     "markdown-react-js": "^1.0.0",
     "moment": "^2.19.2",
     "react": "^16.1.0",
-    "react-bootstrap": "^0.31.5",
     "react-dom": "^16.1.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "^1.0.17"

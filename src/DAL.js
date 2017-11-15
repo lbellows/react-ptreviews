@@ -1,4 +1,4 @@
-import * as AWS from 'aws-sdk';
+import {DynamoDB}from 'aws-sdk';
 import awsconfig from './awsconfig.json';
 
 export default class DAL{
@@ -6,9 +6,9 @@ export default class DAL{
   constructor(){
     //TODO: move this into AWS lambda
     this.DB_TABLES = {reviews: 'Reviews', comments: 'Comments', users: 'Users'};
-    AWS.config.update(awsconfig);
+    //AWS.config.update(awsconfig);
     //this.db = new AWS.DynamoDB();
-    this.client = new AWS.DynamoDB.DocumentClient();
+    this.client = new DynamoDB.DocumentClient(awsconfig);
   }
 
   GetAll(table){

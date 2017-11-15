@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Config from './config.json'
-import * as AWS from 'aws-sdk';
+import Configjson from './config.json'
+import { SNS, CognitoIdentityCredentials, config} from 'aws-sdk';
 
 export default class Contact extends Component {
   
@@ -8,26 +8,30 @@ export default class Contact extends Component {
       super(props);
       this.domain = window.location.hostname;
       this.state = {new: true, message: ""};
+      
+      
     }
   
     Send(){
       
-      AWS.config.region = 'us-east-1'; // Region
-      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-          IdentityPoolId: Config.poolId,
+      config.region = 'us-east-1';
+      var snsConfig = new CognitoIdentityCredentials({
+        IdentityPoolId: Configjson.poolId,
+        //region: 'us-east-1'
       });
-  
-      var service = new AWS.SNS();
+      config.credentials = snsConfig;
+
+      var service = new SNS();
   
       var params = {
           Message: document.getElementById('msg').value,
           Subject: this.domain + ': Message',
-          TopicArn: Config.topicArn,
-  
+          TopicArn: Configjson.topicArn
       }
   
       service.publish(params, (err, data) => {
           if (err){
+            console.log(err);
             this.setState({new: false, message: "Sorry there was an error!"});
           }
           else{

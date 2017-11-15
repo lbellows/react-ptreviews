@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import DAL from './DAL';
 import moment from 'moment';
 
@@ -14,12 +14,11 @@ export class Comment extends Component{
 
 
 //TODO: Combine with comments so you can set state and view new comments
-export class AddComment extends Component {
+export class AddComment extends PureComponent {
 
   constructor(props){
     super(props);
     this.state = {loggedIn: true, commentSubmitted: false }
-    
   }
 
   AddCommentHandler(){
@@ -33,8 +32,12 @@ export class AddComment extends Component {
         reviewId: this.props.reviewId
       };
       console.log(newComment);
-      db.Save(newComment, db.DB_TABLES.comments);//.then(res => location.reload(true));
+      db.Save(newComment, db.DB_TABLES.comments);
       this.setState({commentSubmitted: true});
+
+      //this.forceUpdate();
+      // test this 
+      //this.props = { ...this.props, newComment}
     })
   }
 

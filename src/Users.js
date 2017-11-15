@@ -1,4 +1,4 @@
-import * as AWS from 'aws-sdk';
+import { CognitoIdentityServiceProvider, CognitoIdentity } from 'aws-sdk';
 import awsconfig from './awsconfig.json';
 import { CognitoUserPool, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 
@@ -10,8 +10,8 @@ export default class Users {
   };
 
   constructor(){
-    this.cog = new AWS.CognitoIdentityServiceProvider();
-    this.user = new AWS.CognitoIdentity();
+    this.cog = new CognitoIdentityServiceProvider();
+    this.user = new CognitoIdentity();
   }
 
   CreateUser(email, password){

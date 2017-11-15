@@ -15,6 +15,10 @@ export default class App extends Component {
   constructor(props){
     super(props);
     this.state = null;// {LoggedIn: false}; //Reviews: [], 
+      /*
+        Contain state by object
+        User: {}, Reviews: {}, etc...
+      */
     this.Users = new Users();
     this.actions = {
       doLogin: (user, pass) => {
@@ -34,8 +38,6 @@ export default class App extends Component {
     const blogText = fetch('/blog.md').then(res => res.text());
     Promise.all([reviews, blogText]).then(res => this.setState({Reviews: res[0], blogText: res[1]}) );
   }
-
-  
 
   render() {
     if(!this.state)

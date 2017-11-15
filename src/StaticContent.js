@@ -89,13 +89,10 @@ export const Nav = (data) => {
 
 export const Profile = (props) => {
 	console.log('profile', props)
+		if(!props.LoggedIn)
+			return <li role="presentation"><Link to="/login">Log in</Link></li>
 
-
-			if(!props.LoggedIn)
-				return <li role="presentation"><Link to="/login">Log in</Link></li>
-
-			return <li role="presentation">{props.UserInfo.accessToken.payload.username}</li>
-
+		return <li role="presentation">{props.UserInfo.accessToken.payload.username}</li>
 }
 
 export const Footer = () => {
