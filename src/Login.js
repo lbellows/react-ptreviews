@@ -72,7 +72,7 @@ export default class Login extends Component{
 
         {
           (this.state.isConfirmed && this.state.LoggedIn) && 
-          ("PRofile")
+          ("This could be user profile")
         }
           
         </div>
