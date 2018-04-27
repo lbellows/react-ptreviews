@@ -6,7 +6,7 @@
   "dependencies": {
     "@types/jquery": "^3.3.1",
     "amazon-cognito-identity-js": "^1.31.0",
-    "aws-sdk": "^2.224.1",
+    "aws-sdk": "^2.229.1",
     "babel-runtime": "^6.26.0",
     "jquery": "^3.3.1",
     "markdown-react-js": "^1.0.0",
