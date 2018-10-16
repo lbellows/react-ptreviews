@@ -1,6 +1,7 @@
 import {DynamoDB}from 'aws-sdk';
-import awsconfig from './awsconfig.json';
+import awsconfig from './config/awsconfig.json';
 
+//TODO: This goes in Lambda, replace with something that calls the endpoint
 export default class DAL{
 
   constructor(){
@@ -19,7 +20,7 @@ export default class DAL{
     return this.client.scan(params).promise();
   }
 
-  GetAllCommentsById(val){
+  GetCommentsById(val){
     var params = {
       TableName: 'Comments',
       FilterExpression: 'reviewId = :rev_id',

@@ -15,12 +15,8 @@ export class Comment extends Component{
 
 //TODO: Combine with comments so you can set state and view new comments
 export class AddComment extends PureComponent {
-
-  constructor(props){
-    super(props);
-    this.state = {loggedIn: true, commentSubmitted: false }
-  }
-
+  state = {loggedIn: true, commentSubmitted: false }
+  
   AddCommentHandler(){
     var db = new DAL();
     db.GetAll(db.DB_TABLES.comments).then(res => {
@@ -86,24 +82,19 @@ export class Comments extends Component {
   constructor(props){
     super(props);
     this.db = new DAL();
-    this.state = {myComments: []};
+    this.state = {myComments: null};
     
   }
 
   componentDidMount(){
-    this.db.GetAllCommentsById(this.props.reviewId)
+    this.db.GetCommentsById(this.props.reviewId)
     .then(res => this.setState({myComments: res.Items}));
   }
   
-  TheComments(){
-    return this.state.myComments.map((item) => {
-      return(<h4 key={item.id} className="panel-body">{item.value}</h4>);
-    });
-  }
-
   render(){
-    
-    
+    if(!this.state.myComments)
+      return null;
+
     console.log(this.props);
     //console.log(comments);
 
@@ -112,7 +103,11 @@ export class Comments extends Component {
         <hr />
         <div className="panel-heading">
           <h3>Read comments:</h3>
-          {this.TheComments() }
+          {
+            this.state.myComments.map((item) => {
+              return(<h4 key={item.id} className="panel-body">{item.value}</h4>);
+            })
+          }
           <AddComment reviewId={this.props.reviewId} />
         </div>
       </div>

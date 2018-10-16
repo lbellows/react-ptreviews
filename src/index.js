@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import {Footer} from './StaticContent';
-import './slate.css';
-import './styles.css';
+import './css/slate.css';
+import './css/styles.css';
 
 console.log("index.js init");
 

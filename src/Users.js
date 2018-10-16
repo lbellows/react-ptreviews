@@ -1,7 +1,9 @@
 import { CognitoIdentityServiceProvider, CognitoIdentity } from 'aws-sdk';
-import awsconfig from './awsconfig.json';
+import awsconfig from './config/awsconfig.json';
 import { CognitoUserPool, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 
+
+//TODO: This goes in Lambda, replace with something that calls the endpoint
 export default class Users {
 
   poolData = {

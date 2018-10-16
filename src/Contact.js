@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Configjson from './config.json'
+import Configjson from './config/config.json'
 import { SNS, CognitoIdentityCredentials, config} from 'aws-sdk';
 
 export default class Contact extends Component {
