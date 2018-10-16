@@ -6,16 +6,17 @@
   "dependencies": {
     "@types/jquery": "^3.3.19",
     "ajv": "^6.5.4",
-    "amazon-cognito-identity-js": "^2.0.30",
+    "amazon-cognito-identity-js": "^3.0.2",
     "aws-sdk": "^2.336.0",
     "babel-runtime": "^6.26.0",
     "jquery": "^3.3.1",
     "markdown-react-js": "^1.0.0",
     "moment": "^2.22.2",
     "react": "^16.5.2",
+    "react-app-polyfill": "^0.1.3",
     "react-dom": "^16.5.2",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^1.1.5"
+    "react-scripts": "^2.0.5"
   },
   "scripts": {
     "start": "react-scripts start",
